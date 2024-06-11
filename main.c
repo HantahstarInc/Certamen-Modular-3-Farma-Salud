@@ -73,6 +73,9 @@ struct Producto{
     unsigned long precio;
 };
 
+//Funciones de printear datos
+
+//funcion que muestra los datos unitarios de cada tipo de medicamento con su cantidad comprada
 void mostrarProductosEnBoleta(struct TipoMed ** medicamentos,int tamanio)
 {
     int i;
@@ -85,7 +88,7 @@ void mostrarProductosEnBoleta(struct TipoMed ** medicamentos,int tamanio)
         }
     }
 }
-
+//funcion que muestra todos los datos de las boletas
 void mostrarNodoBoleta(struct NodoBoleta *headBoleta)
 {
     struct NodoBoleta *rec;
@@ -110,7 +113,7 @@ void mostrarNodoBoleta(struct NodoBoleta *headBoleta)
         }
     }
 }
-
+//funcion que muestra todos los datos de la lista de la farmacia
 void mostrarNodoFarmacias(struct NodoFarmacias *headFarmacia)
 {
     struct NodoFarmacias *rec;
@@ -130,7 +133,7 @@ void mostrarNodoFarmacias(struct NodoFarmacias *headFarmacia)
         puts("\nAun no hay sucursales");
     }
 }
-
+//funcion que muestra un unico dato de la lista de la farmacia
 void mostrarFarmacia(struct Farmacias *farmacia)
 {
     printf("\n=============================================\n");
@@ -139,7 +142,7 @@ void mostrarFarmacia(struct Farmacias *farmacia)
     printf("presupuesto de la farmacia: %li\n", farmacia->presupuesto);
     printf("=============================================\n\n");
 }
-
+//funcion que muestra todos los datos de la lista doblemente enlazada del inventario
 void mostrarNodoInventario(struct NodoInventario * headInventario)
 {
     struct NodoInventario*rec = headInventario;
@@ -159,7 +162,7 @@ void mostrarNodoInventario(struct NodoInventario * headInventario)
         puts("No hay medicamentos en esta farmacia");
     }
 }
-
+//funcion muestra todos los datos de la lista doblemente enlazada circular de los proveedores
 void mostrarNodoProveedores(struct NodoProveedores *headProveedores)
 {
     struct NodoProveedores *rec = headProveedores;
@@ -180,7 +183,7 @@ void mostrarNodoProveedores(struct NodoProveedores *headProveedores)
         puts("No hay Proveedores aun");
     }
 }
-
+//funcion un unico dato de la lista doblemente enlazada del proveedor
 void mostrarProveedor(struct Proveedor *proveedor)
 {
     printf("\n=============================================\n");
@@ -189,7 +192,7 @@ void mostrarProveedor(struct Proveedor *proveedor)
     printf("Cuota del Proveedor : $%lu\n",proveedor->cuota);
     printf("=============================================\n\n");
 }
-
+//funcion muestra todos los datos en el arbol binario de busqueda del catalogo
 void mostrarNodoCatalogo(struct RaizCatalogos *arbol)
 {
     if(arbol) {
@@ -210,9 +213,9 @@ void mostrarNodoCatalogo(struct RaizCatalogos *arbol)
     }
 }
 
-/*Janet*/
-//retorna el producto que buscas por su codigo en el caso de que exista, si no existe el producto retorna NULL
+//Funciones Catalogo
 
+//funcion busca un producto en un arbol binario de busqueda y retorna el nodo donde esta si no, retornara NULL
 struct RaizCatalogos *buscarProductoEnCatalogo(struct RaizCatalogos *arbol, char *codigoProducto){
     if(arbol == NULL || arbol->DatosProductos == NULL){
         return NULL;
@@ -231,7 +234,7 @@ struct RaizCatalogos *buscarProductoEnCatalogo(struct RaizCatalogos *arbol, char
             return buscarProductoEnCatalogo(arbol->der, codigoProducto);
     }
 }
-
+//funcion crea un nuevo producto asignole los datos correspondientes
 struct Producto *crearProductoNuevo(char *nombre,char *codigoNuevo, int recetaNueva, char *categoriaNueva, char *descripcionNueva, unsigned long precioNuevo){
     struct Producto *nuevo = (struct Producto *)malloc(sizeof(struct Producto));
 
@@ -256,7 +259,7 @@ struct Producto *crearProductoNuevo(char *nombre,char *codigoNuevo, int recetaNu
     return nuevo;
 }
 
-//retorna 1 si el producto se agregó al catálogo, retorna 0 en caso contrario
+//funcion agrega un nuevo producto en el arbol binario de busqueda de catalogo de productos
 int agregarProductoAlCatalogo(struct RaizCatalogos **arbol,char *nombreNuevo, char *codigoNuevo, int recetaNueva, char *categoriaNueva, char *descripcionNueva, unsigned long precioNuevo){
     struct Producto *productoNuevo = crearProductoNuevo(nombreNuevo,codigoNuevo, recetaNueva, categoriaNueva, descripcionNueva, precioNuevo);
     if(!productoNuevo){
@@ -281,9 +284,7 @@ int agregarProductoAlCatalogo(struct RaizCatalogos **arbol,char *nombreNuevo, ch
     }
     return 0;
 }
-
-
-//función eliminar
+//función busca y retorna el nodo padre de un nodo especifico en un arbol binario de busqueda
 struct RaizCatalogos *getPadre(struct RaizCatalogos *arbol, struct RaizCatalogos *hijo){
     struct RaizCatalogos *nodoAntecesor = NULL;
     if(arbol){
@@ -300,14 +301,14 @@ struct RaizCatalogos *getPadre(struct RaizCatalogos *arbol, struct RaizCatalogos
     }
     return nodoAntecesor;
 }
-
+//funcion retorna el unico hijo no nulo de un nodo en un arbol binario de busqueda
 struct RaizCatalogos *hijoNoNull(struct RaizCatalogos *nodoAEliminar){
     if(nodoAEliminar->izq != NULL)
         return nodoAEliminar->izq;
     else
         return nodoAEliminar->der;
 }
-
+//funcion para eliminar un "nodo" en el arbol binario de busqueda, viendo los diferentes casos
 int eliminarProductoDelCatalogo(struct RaizCatalogos **arbol, char *codigoProducto){
     if(!arbol){
         return -2;
@@ -387,6 +388,9 @@ int eliminarProductoDelCatalogo(struct RaizCatalogos **arbol, char *codigoProduc
     return 0;
 }
 
+//Funciones de TipoMed
+
+//funcion para asignarle los datos al nuevo nodo en la lista doblemente enlazada
 struct TipoMed *crearTipoMed(char *codigo,struct RaizCatalogos *abb){
 
 
@@ -408,7 +412,7 @@ struct TipoMed *crearTipoMed(char *codigo,struct RaizCatalogos *abb){
 
     return tiponuevo;
 }
-
+//funcion que busca en la lista por el codigo dado
 struct NodoInventario *buscartipomed(struct NodoInventario *headinventario,char *codigobuscado)
 {
     struct NodoInventario *rec;
@@ -425,10 +429,9 @@ struct NodoInventario *buscartipomed(struct NodoInventario *headinventario,char 
     }
     return NULL;
 }
-//agregarTipoMedALista
-int agregarTipoMedalista(struct NodoInventario **headinventario, struct TipoMed *tiponuevo)
+//funcion que agrega un nuevo nodo si es que no esta ya de por si en la lista
+int agregarTipoMedaLista(struct NodoInventario **headinventario, struct TipoMed *tiponuevo)
 {
-    //struct NodoInventario *nuevonodo =
     struct NodoInventario *rec;
 
 
@@ -457,8 +460,7 @@ int agregarTipoMedalista(struct NodoInventario **headinventario, struct TipoMed 
     }
     return 0;
 }
-//eliminarTipoMed
-
+//funcion que elimina un nodo de la lista doblemente enlazada
 int eliminarTipomed(struct NodoInventario **headinventario, char *codigoProducto)
 {
     struct NodoInventario *current;
@@ -489,7 +491,9 @@ int eliminarTipomed(struct NodoInventario **headinventario, char *codigoProducto
     }
     return -1;
 }
+
 //Funciones farmacias
+
 struct Farmacias *crearFarmacia(char *ubicacion,int capacidad,long presupuesto){
 
 
@@ -506,7 +510,7 @@ struct Farmacias *crearFarmacia(char *ubicacion,int capacidad,long presupuesto){
     farmaciaNueva -> headInventario = NULL;
     return farmaciaNueva;
 }
-
+//funcion para buscar en la lista de las farmacias usando la ubicacion, retornara el nodo de la buscada
 struct NodoFarmacias * buscarFarmacia(struct NodoFarmacias *headFarmacias,char *ubicacionBuscada)
 {
     struct NodoFarmacias * current;
@@ -523,7 +527,7 @@ struct NodoFarmacias * buscarFarmacia(struct NodoFarmacias *headFarmacias,char *
     }
     return NULL;
 }
-
+//funcion para agregar un nuevo nodo para la lista de las farmacias
 int agregarFarmaciaALista(struct NodoFarmacias **headFarmacias, struct Farmacias *farmaciaNueva)
 {
     struct NodoFarmacias *rec;
@@ -555,7 +559,7 @@ int agregarFarmaciaALista(struct NodoFarmacias **headFarmacias, struct Farmacias
 
     return 0;
 }
-
+//funcion para eliminar un nodo en la lista doblemente enlazada de la farmacia dependiendo de la ubicacion
 int eliminarFarmacia(struct NodoFarmacias **headFarmacias, char *ubicacion) {
     struct NodoFarmacias *current;
     if (*headFarmacias == NULL) {
@@ -608,7 +612,7 @@ struct Proveedor * crearProveedor(char *nombreProveedor, char* ubicacion , unsig
 
     return ProveedorNuevo;
 }
-
+//funcion para buscar en la lista de los proveedores por nombre, te retorna el nodo del que buscas
 struct NodoProveedores * buscarProveedores(struct NodoProveedores *headProveedores,char *nombre)
 {
     struct NodoProveedores * rec;
@@ -625,7 +629,7 @@ struct NodoProveedores * buscarProveedores(struct NodoProveedores *headProveedor
     }
     return NULL;
 }
-
+//funcion para introducir nuevo nodo a la lista doblemente enlazada del proveedor
 int agregarProveedor(struct NodoProveedores **headProveedores,struct Proveedor *ProveedorNuevo)
 {
     struct NodoProveedores *rec = *headProveedores;
@@ -661,7 +665,7 @@ int agregarProveedor(struct NodoProveedores **headProveedores,struct Proveedor *
     }
     return 0;
 }
-
+//funcion para eliminar un nodo en la lista doblemente enlazada circular del proveedor
 int eliminarProveedor(struct NodoProveedores **headProveedores,char *nombre)
 {
     struct NodoProveedores *temp,*rec = (*headProveedores);
@@ -707,7 +711,7 @@ int eliminarProveedor(struct NodoProveedores **headProveedores,char *nombre)
     }
     return 0;
 }
-
+//funcion para que los proveedores tengan su propio catalogo, pero, apuntan a los datos del catalogo de FarmaSalud
 int agregarProductoCatalogoProveedor(char *codigoNuevoProducto, struct RaizCatalogos **raizProveedor, struct RaizCatalogos *ptrCatalogo){
     if(*raizProveedor == NULL){
         *raizProveedor = (struct RaizCatalogos *)malloc(sizeof(struct RaizCatalogos));
@@ -727,9 +731,7 @@ int agregarProductoCatalogoProveedor(char *codigoNuevoProducto, struct RaizCatal
 
     return 0;
 }
-
-/*-----------------------------------------------------*/
-// FERNANDO - Funciones para registrar ventas y actualizar el stock en cada farmacia.//
+//funcion que busca el producto/medicamento por codigo y retorna el struct donde esta toda la informacion del buscado
 struct Producto *buscarMedicamentoPorCodigo(struct NodoInventario *headInventario,char *codigo)
 {
     struct NodoInventario *rec = headInventario;
@@ -745,6 +747,9 @@ struct Producto *buscarMedicamentoPorCodigo(struct NodoInventario *headInventari
     return NULL;
 }
 
+//Funciones Boleta
+
+//funcion para darle los valores a un nuevo nodo tipo boleta
 struct Boleta * crearBoleta(char *rut,char *fecha,unsigned long montoVenta,struct TipoMed **MedicamentosVenta,int tamanio)
 {
     struct Boleta *boletaNueva = (struct Boleta*)malloc(sizeof(struct Boleta));
@@ -760,7 +765,7 @@ struct Boleta * crearBoleta(char *rut,char *fecha,unsigned long montoVenta,struc
     boletaNueva ->tamanio = tamanio;
     return boletaNueva;
 }
-
+//funcion para buscar en la lista doblemente enlazada por el rut
 struct NodoBoleta * buscarBoleta(struct NodoBoleta * headBoletas,char *rut)
 {
     struct NodoBoleta * current;
@@ -778,7 +783,7 @@ struct NodoBoleta * buscarBoleta(struct NodoBoleta * headBoletas,char *rut)
     }
     return NULL;
 }
-
+//funcion para añadir una boleta a la lista doblemente enlazada
 int agregarBoletasALista(struct NodoBoleta ** headBoletas,struct Boleta * boletaNueva)
 {
     struct NodoBoleta *rec;
@@ -810,8 +815,7 @@ int agregarBoletasALista(struct NodoBoleta ** headBoletas,struct Boleta * boleta
     }
     return 0;
 }
-
-
+//funcion para eliminar una boleta
 int eliminarBoleta(struct NodoBoleta ** headBoletas,char *rut)
 {
     struct NodoBoleta *current;
@@ -843,11 +847,9 @@ int eliminarBoleta(struct NodoBoleta ** headBoletas,char *rut)
     return 0;
 }
 
-/*------------------------------------------------------------------------------*/
-/*-----------------------------------------------------*/
-//MATI
+//Funciones varias usadas en el menu
 
-//return 1 fecha1 es mayor a fecha 2 return -1 fecha 1 es menor que fecha 2 return 0 son iguales
+//funcion para comparar fechas de manera mas exacta, viendo el año el mes y el dia
 int estaCaducado(char *fecha1,char *fecha2) {
     char fecha1cpy[11];
     char fecha2cpy[11];
@@ -883,7 +885,7 @@ int estaCaducado(char *fecha1,char *fecha2) {
     }
     return 0;
 }
-
+//funcion para ver el stock real de ese dia, osease que ve los productos que no esten caducados
 int verificarStockParaCompras(struct Medicamento **medicamentos,char*fecha,int tamanio)
 {
     if(tamanio == 0)
@@ -900,7 +902,7 @@ int verificarStockParaCompras(struct Medicamento **medicamentos,char*fecha,int t
     }
     return cont;
 }
-
+//funcion que llama a una alerta una vez un producto se este agotando, que tenga menos de 10 de stock
 void alerta(struct Farmacias *farma){
     struct NodoInventario *rec = farma->headInventario;
     if (rec!=NULL){
@@ -912,7 +914,7 @@ void alerta(struct Farmacias *farma){
         }
     }
 }
-
+//funcion que elima y compacta una vez encuentra el caso que esta buscando
 int compactarDespuesDeVenta(struct Medicamento **medicamento, int *plibre,char *fecha)
 {
     int i, j;
@@ -933,7 +935,7 @@ int compactarDespuesDeVenta(struct Medicamento **medicamento, int *plibre,char *
     }
     return 0;
 }
-
+//funcion modularizada para eliminar y compactar tantas veces se quiera comprar este medicamento
 void eliminarYCompactar(struct Medicamento **medicamento,char *fecha,int *plibre,int maximoDeVeces)
 {
     int i,verificar;
@@ -941,7 +943,7 @@ void eliminarYCompactar(struct Medicamento **medicamento,char *fecha,int *plibre
         verificar = compactarDespuesDeVenta((medicamento),(plibre),fecha);
     }
 }
-
+//funcion para comprobar que no se este repitiendo el mismo tipo de medicamento en la boleta
 int estaEnBoleta(struct TipoMed ** medicamentos ,char *codigo,int tamanio)
 {
     int i;
@@ -955,12 +957,10 @@ int estaEnBoleta(struct TipoMed ** medicamentos ,char *codigo,int tamanio)
     }
     return 0;
 }
-
+//funcion para mostrar los productos que estan disponibles en la fecha dada con su cantidad tambien verificada
 void mostrarProductosParaLaVenta(struct NodoInventario *headInventario, char *fecha) {
     struct NodoInventario *rec = headInventario;
     int verificar;
-
-
     while (rec != NULL) {
         verificar = verificarStockParaCompras(rec->DatosMed->medicamentos, fecha, rec->DatosMed->stock);
         if (verificar != 0 && rec->DatosMed->Datosprod != NULL) {
@@ -975,7 +975,7 @@ void mostrarProductosParaLaVenta(struct NodoInventario *headInventario, char *fe
         rec = rec->sig;
     }
 }
-
+//funcion para ver si en la fecha dada hay stock sin estar caducado
 int verificarProductosEnfecha(struct NodoInventario * headInventario,char *fecha){
     struct NodoInventario * rec;
     int cont = 0,aux;
@@ -994,10 +994,120 @@ int verificarProductosEnfecha(struct NodoInventario * headInventario,char *fecha
     }
     return cont;
 }
+//funcion que muestra a los proveedores que tienen en su catalogo el medicamento que quieres
+void mostrarProveedoresQuesirven(struct NodoProveedores *headProveedores,char *codigo){
+    struct NodoProveedores * rec;
+    if(headProveedores != NULL)
+    {
+        rec = headProveedores;
+        do{
+            if(buscarProductoEnCatalogo(rec->DatosProveedor->Mercancia,codigo)!=NULL){
+                mostrarProveedor(rec->DatosProveedor);
+            }
+            rec = rec ->sig;
+        }while(rec != headProveedores);
+    }
+}
+//funcion que te propisiona los proveedores con el medicamento que estas pidiendo
+int buscarProveedorQuesirve(struct NodoProveedores *headProveedores,char *nombre, char *codigo){
+    struct NodoProveedores * rec = headProveedores;
+    if(headProveedores != NULL)
+    {
+        do{
+            if(buscarProductoEnCatalogo(rec->DatosProveedor->Mercancia,codigo)!=NULL)
+            {
+                if(strcmp(rec->DatosProveedor->nombre,nombre)==0){
+                    return 1;
+                }
+            }
+            rec = rec ->sig;
+        }while(rec != headProveedores);
+        return 0;
+    }
+    return 0;
+}
+//funcion que tiene el proposito de ver la capacidad de la bodega
+unsigned long sumatoriaDeStockFarmacia(struct NodoFarmacias *sucursal){
+    unsigned long suma = 0;
+    struct NodoInventario *rec;
+    rec = sucursal->DatosFarmacias->headInventario;
+    while(rec!=NULL){
+        suma = rec->DatosMed->stock;
+        rec = rec->sig;
+    }
+    return suma;
+}
+//funcion que saca un promedio entre todas las ventas de los diferentes productos, le asigna alta demanda al que sea mayor al promedio
+void altaDemanda(struct NodoFarmacias *sucursal,struct NodoInventario **tipomed){
+    long suma = 0,cont = 0;
+    struct NodoInventario *rec;
+    if (sucursal->DatosFarmacias->headInventario!=NULL){
 
+
+        rec = sucursal->DatosFarmacias->headInventario;
+        while (rec!=NULL){
+            suma += rec->DatosMed->demanda;
+            cont++;
+            rec = rec->sig;
+        }
+    }
+    if (suma==0||cont==0){
+        (*tipomed)->DatosMed->altademanda = 0;
+    }
+    else{
+        long promedio = (suma/cont);
+        if (((*tipomed)->DatosMed->demanda)>promedio){
+            (*tipomed)->DatosMed->altademanda = 1;
+        }
+        else{
+            (*tipomed)->DatosMed->altademanda = 0;
+        }
+    }
+}
+//funcion que le da datos a un arreglo y le configura el tamaño cada vez que lo hace
+void agregarMedicamentos(struct NodoProveedores **prove,struct NodoInventario **tipomed,long cantidad,char *fecha,int lote){
+    long i;
+    long maximorecorrer = (long)(((*tipomed)->DatosMed->stock)+cantidad);
+    struct Proveedor *proveedormedicamento= (*prove)->DatosProveedor;
+
+
+    struct Medicamento **aux = (struct Medicamento **)realloc((*tipomed)->DatosMed->medicamentos, maximorecorrer * sizeof(struct Medicamento *));
+    if (aux == NULL) {
+        printf("Error al reasignar memoria\n");
+    }
+    (*tipomed)->DatosMed->medicamentos=aux;
+    for (i = (long)((*tipomed)->DatosMed->stock); i < maximorecorrer; i++) {
+        (*tipomed)->DatosMed->medicamentos[i] = (struct Medicamento *)malloc(sizeof(struct Medicamento));
+        if ((*tipomed)->DatosMed->medicamentos[i] == NULL) {
+            printf( "Error al asignar memoria para medicamento\n");
+        }
+        (*tipomed)->DatosMed ->medicamentos[i] ->fechacaducidad = (char*) malloc(strlen(fecha) + 1);
+        strcpy((*tipomed)->DatosMed->medicamentos[i]->fechacaducidad,(fecha));
+        (*tipomed)->DatosMed->medicamentos[i]->lote = lote;
+        (*tipomed)->DatosMed->medicamentos[i]->DatosProveedor = proveedormedicamento;
+
+
+
+
+    }
+    (*tipomed)->DatosMed->stock+=(int)cantidad;
+    /*
+    //Esto es para asegurar que se esta guardando de buena manera
+    for (i=0;i<maximorecorrer;i++){
+        puts("\n=============================================");
+        printf("Fecha caducidad  : %s \n",((*tipomed))->DatosMed->medicamentos[i]->fechacaducidad);
+        printf("Numero de lote  : %i \n",((*tipomed))->DatosMed->medicamentos[i]->lote);
+        printf("Nombre del proveedor : %s \n",((*tipomed))->DatosMed->medicamentos[i]->DatosProveedor->nombre);
+        puts("\n=============================================");
+    }
+    */
+
+}
+
+//Funciones menu
+
+//funcion del menu de venta y registro, se  le agrega un reegistro de venta en la farmacia elegida, se crea una boleta
 void menuVentaYRegistro(struct Farmacias **Farmacia) {
-
-
     struct NodoInventario *aux;
     struct Producto *productoaAgregar;
     struct TipoMed **MedicamentosVenta = NULL;
@@ -1260,7 +1370,7 @@ void menuVentaYRegistro(struct Farmacias **Farmacia) {
         }
     } while (opcion != 2);
 }
-
+//funcion para gestionar el catalogo de la empresa FarmaSalud
 void menuCatalogo(struct FarmaSalud **farma){
     int opcion;
     char nombre[MAX];
@@ -1408,6 +1518,7 @@ void menuCatalogo(struct FarmaSalud **farma){
         }
     }while (opcion != 5);
 }
+//funcion que toma la direccion de una farmacia y le da "inventario" con esto se modifica lo que tiene en la bodega
 void menuInventario(struct NodoFarmacias **farmacias,struct FarmaSalud *farma){
     int opcion;
     char codigo[MAX];
@@ -1439,7 +1550,7 @@ void menuInventario(struct NodoFarmacias **farmacias,struct FarmaSalud *farma){
                     printf("Codigo no existe en el catalogo\n");
                     break;
                 }
-                verificar = agregarTipoMedalista(&(*farmacias)->DatosFarmacias->headInventario,tipomednuevo);
+                verificar = agregarTipoMedaLista(&(*farmacias)->DatosFarmacias->headInventario,tipomednuevo);
                 if (verificar==1){
                     printf("\nTipo de medicamento %s agregado exitosamente.\n",tipomednuevo->Datosprod->nombre);
                 }
@@ -1499,7 +1610,7 @@ void menuInventario(struct NodoFarmacias **farmacias,struct FarmaSalud *farma){
         }
     } while(opcion != 5);
 }
-
+//funcion para poder manipular las boletas creadas
 void menuBoletas(struct NodoBoleta **headBoleta,char *ubicacionSucursal)
 {
     int opcion;
@@ -1547,7 +1658,7 @@ void menuBoletas(struct NodoBoleta **headBoleta,char *ubicacionSucursal)
 
 
 }
-
+//funcion para el menu principal de las farmcias
 void menuFarmacias(struct FarmaSalud **farma) {
     int opcion;
     char ubicacion[MAX];
@@ -1672,7 +1783,7 @@ void menuFarmacias(struct FarmaSalud **farma) {
         }
     } while(opcion != 6);
 }
-//menuElegirFarmacia
+//funcion para elegir a cual farmacia darle "inventario" osease darle nuevos tipos de productos/medicamentos
 void menuelegirFarmacia(struct FarmaSalud **farma) {
     int opcion;
     char ubicacionelegida[MAX];
@@ -1711,116 +1822,7 @@ void menuelegirFarmacia(struct FarmaSalud **farma) {
         }
     } while (opcion != 2);
 }
-//mostrarProveedoresQueSirven
-void mostrarProveedoresQuesirven(struct NodoProveedores *headProveedores,char *codigo){
-    struct NodoProveedores * rec;
-    if(headProveedores != NULL)
-    {
-        rec = headProveedores;
-        do{
-            if(buscarProductoEnCatalogo(rec->DatosProveedor->Mercancia,codigo)!=NULL){
-                mostrarProveedor(rec->DatosProveedor);
-            }
-            rec = rec ->sig;
-        }while(rec != headProveedores);
-    }
-}
-//buscarProveedorQueSirve
-int buscarProveedorQuesirve(struct NodoProveedores *headProveedores,char *nombre, char *codigo){
-    struct NodoProveedores * rec = headProveedores;
-    if(headProveedores != NULL)
-    {
-        do{
-            if(buscarProductoEnCatalogo(rec->DatosProveedor->Mercancia,codigo)!=NULL)
-            {
-                if(strcmp(rec->DatosProveedor->nombre,nombre)==0){
-                    return 1;
-                }
-            }
-            rec = rec ->sig;
-        }while(rec != headProveedores);
-        return 0;
-    }
-    return 0;
-}
-//sumatoriaDeStockFarmacia
-unsigned long sumatoriaDeStockFarmacia(struct NodoFarmacias *sucursal){
-    unsigned long suma = 0;
-    struct NodoInventario *rec;
-    rec = sucursal->DatosFarmacias->headInventario;
-    while(rec!=NULL){
-        suma = rec->DatosMed->stock;
-        rec = rec->sig;
-    }
-    return suma;
-}
-
-void altaDemanda(struct NodoFarmacias *sucursal,struct NodoInventario **tipomed){
-    long suma = 0,cont = 0;
-    struct NodoInventario *rec;
-    if (sucursal->DatosFarmacias->headInventario!=NULL){
-
-
-        rec = sucursal->DatosFarmacias->headInventario;
-        while (rec!=NULL){
-            suma += rec->DatosMed->demanda;
-            cont++;
-            rec = rec->sig;
-        }
-    }
-    if (suma==0||cont==0){
-        (*tipomed)->DatosMed->altademanda = 0;
-    }
-    else{
-        long promedio = (suma/cont);
-        if (((*tipomed)->DatosMed->demanda)>promedio){
-            (*tipomed)->DatosMed->altademanda = 1;
-        }
-        else{
-            (*tipomed)->DatosMed->altademanda = 0;
-        }
-    }
-}
-
-void agregarMedicamentos(struct NodoProveedores **prove,struct NodoInventario **tipomed,long cantidad,char *fecha,int lote){
-    long i;
-    long maximorecorrer = (long)(((*tipomed)->DatosMed->stock)+cantidad);
-    struct Proveedor *proveedormedicamento= (*prove)->DatosProveedor;
-
-
-    struct Medicamento **aux = (struct Medicamento **)realloc((*tipomed)->DatosMed->medicamentos, maximorecorrer * sizeof(struct Medicamento *));
-    if (aux == NULL) {
-        printf("Error al reasignar memoria\n");
-    }
-    (*tipomed)->DatosMed->medicamentos=aux;
-    for (i = (long)((*tipomed)->DatosMed->stock); i < maximorecorrer; i++) {
-        (*tipomed)->DatosMed->medicamentos[i] = (struct Medicamento *)malloc(sizeof(struct Medicamento));
-        if ((*tipomed)->DatosMed->medicamentos[i] == NULL) {
-            printf( "Error al asignar memoria para medicamento\n");
-        }
-        (*tipomed)->DatosMed ->medicamentos[i] ->fechacaducidad = (char*) malloc(strlen(fecha) + 1);
-        strcpy((*tipomed)->DatosMed->medicamentos[i]->fechacaducidad,(fecha));
-        (*tipomed)->DatosMed->medicamentos[i]->lote = lote;
-        (*tipomed)->DatosMed->medicamentos[i]->DatosProveedor = proveedormedicamento;
-
-
-
-
-    }
-    (*tipomed)->DatosMed->stock+=(int)cantidad;
-    /*
-    //Esto es para asegurar que se esta guardando de buena manera
-    for (i=0;i<maximorecorrer;i++){
-        puts("\n=============================================");
-        printf("Fecha caducidad  : %s \n",((*tipomed))->DatosMed->medicamentos[i]->fechacaducidad);
-        printf("Numero de lote  : %i \n",((*tipomed))->DatosMed->medicamentos[i]->lote);
-        printf("Nombre del proveedor : %s \n",((*tipomed))->DatosMed->medicamentos[i]->DatosProveedor->nombre);
-        puts("\n=============================================");
-    }
-    */
-
-}
-
+//funcion de menu para poder confirmar la orden viendo el precio y demas
 void menuConfirmarOrden(struct NodoProveedores **prove,struct NodoFarmacias **sucursal,struct NodoInventario **tipomed,long cantidad,unsigned long precio){
     int opcion;
     int lote;
@@ -1864,7 +1866,7 @@ void menuConfirmarOrden(struct NodoProveedores **prove,struct NodoFarmacias **su
         }
     }while(opcion!=2);
 }
-//menuRealizarOrden
+//funcion para dar la cantidad del mismo producto a elegir y llamar a la funcion de alta demanda si es que tiene
 void menuRealizarOrden(struct NodoProveedores **prove,struct NodoFarmacias **sucursal,struct NodoInventario **tipodemedicamento){
     int opcion;
     long cantidad;
@@ -1926,7 +1928,7 @@ void menuRealizarOrden(struct NodoProveedores **prove,struct NodoFarmacias **suc
 
 
 }
-
+//funcion para elegir a los proveedores que distribuyen los medicamentos que quieres
 void menuOrden(struct FarmaSalud **farma,struct NodoFarmacias **sucursal){
     int opcion;
     char codigo[MAX];
@@ -1992,7 +1994,7 @@ void menuOrden(struct FarmaSalud **farma,struct NodoFarmacias **sucursal){
         }
     }while(opcion!=2);
 }
-//
+//funcion para poder elegir a cual sucursal hacerle orden
 void menuOrdenFarmacia(struct FarmaSalud **farma) {
     int opcion;
     char ubicacionelegida[MAX];
